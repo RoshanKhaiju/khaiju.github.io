@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="spinner container-fluid ml-2 mt-4" id="loading">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only"></span>
+        </div>
+    </div>
+
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary" id="navbar" hidden>
+        <div class="container d-flex justify-content-center">
+            <div id="navbarNav">
+                <ul class="navbar-nav d-flex flex-row">
+                    <li class="nav-item pr-5 pl-5">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item pr-5 pl-5">
+                        <a class="nav-link" href="#">About Me</a>
+                    </li>
+                    <li class="nav-item pr-5 pl-5">
+                        <a class="nav-link" href="#">Projects</a>
+                    </li>
+                    <li class="nav-item pr-5 pl-5">
+                        <a class="nav-link" href="#">Hire Me</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="bg-light">
+        <div class="container pt-5 pb-5" id="mainContent" hidden>
+            <div class="row">
+                <div class="col-sm-5 col-md-4">
+                    <img src="" class="img-fluid" id="profileImage" alt="responsive image">
+                </div>
+                <div class="col-sm-5 offset-sm-2 col-md-8 offset-md-0">
+                    <h2 class="mb-3" id="fullName"></h2>
+                    <p id="bio"></p>
+                    <p id="followersInformation"></p>
+                    <p>Check me on <a id="githubLink">Github</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="text-center bg-primary">
+            <p class="p-2">My Portfolio. CopyRight 2021</p>
+        </div>
+    </footer>
+
+</body>
+
+<script>
+    fetch("https://api.github.com/users/RoshanKhaiju")
+        .then(response => response.json())
+        .then(function (data) {
+            console.log(data)
+
+            let followersCount = data['followers']
+            let followersInfo = 'I have been followed by ' + followersCount + ' awesome people on Github'
+
+            document.getElementById('profileImage').src = data['avatar_url']
+            document.getElementById('fullName').textContent = data['name']
+            document.getElementById('bio').textContent = data['bio']
+            document.getElementById('followersInformation').textContent = followersInfo
+            document.getElementById('githubLink').href = data['html_url']
+
+            document.getElementById('navbar').hidden = false
+            document.getElementById('mainContent').hidden = false
+            document.getElementById('loading').hidden = true
+
+        })
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+</html>
